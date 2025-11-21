@@ -1,0 +1,108 @@
+<header class="sticky top-0 z-50 bg-white shadow-md">
+  <nav class="container mx-auto px-4">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center">
+        <img src="assets/images/logo.png" alt="Therapiezentrum Horvay Logo" class="h-16 w-auto">
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center space-x-1">
+        <a routerLink="/" routerLinkActive="text-[#94c11c]" [routerLinkActiveOptions]="{exact: true}" 
+           class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors font-medium">
+          Startseite
+        </a>
+        
+        <a routerLink="/ueber-uns" routerLinkActive="text-[#94c11c]" 
+           class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors font-medium">
+          Über uns
+        </a>
+
+        <!-- Therapien Dropdown -->
+        <div class="relative group">
+          <button class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors font-medium flex items-center">
+            Therapien
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+            <div class="py-2">
+              <a routerLink="/ergotherapie" class="block px-4 py-2 text-gray-700 hover:bg-[#94c11c] hover:text-white transition-colors">
+                Ergotherapie
+              </a>
+              <a routerLink="/feinmotoriktherapie" class="block px-4 py-2 text-gray-700 hover:bg-[#94c11c] hover:text-white transition-colors">
+                Feinmotoriktherapie
+              </a>
+              <a routerLink="/neurologie" class="block px-4 py-2 text-gray-700 hover:bg-[#94c11c] hover:text-white transition-colors">
+                Neurologie
+              </a>
+              <a routerLink="/kindertherapie" class="block px-4 py-2 text-gray-700 hover:bg-[#94c11c] hover:text-white transition-colors">
+                Kindertherapie
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a routerLink="/standorte-kontakt" routerLinkActive="text-[#94c11c]" 
+           class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors font-medium">
+          Standorte/Kontakt
+        </a>
+        
+        <a routerLink="/jobs" routerLinkActive="text-[#94c11c]" 
+           class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors font-medium">
+          Jobs
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button (click)="toggleMobileMenu()" class="lg:hidden p-2 text-gray-700 hover:text-[#94c11c]">
+        <svg *ngIf="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg *ngIf="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div *ngIf="mobileMenuOpen" class="lg:hidden pb-4 border-t border-gray-200 mt-2">
+      <div class="flex flex-col space-y-2 pt-4">
+        <a routerLink="/" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           [routerLinkActiveOptions]="{exact: true}" class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Startseite
+        </a>
+        <a routerLink="/ueber-uns" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Über uns
+        </a>
+        <div class="px-4 py-2 text-gray-700 font-semibold">Therapien</div>
+        <a routerLink="/ergotherapie" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           class="px-8 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Ergotherapie
+        </a>
+        <a routerLink="/feinmotoriktherapie" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           class="px-8 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Feinmotoriktherapie
+        </a>
+        <a routerLink="/neurologie" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           class="px-8 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Neurologie
+        </a>
+        <a routerLink="/kindertherapie" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           class="px-8 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Kindertherapie
+        </a>
+        <a routerLink="/standorte-kontakt" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Standorte/Kontakt
+        </a>
+        <a routerLink="/jobs" (click)="closeMobileMenu()" routerLinkActive="text-[#94c11c]" 
+           class="px-4 py-2 text-gray-700 hover:text-[#94c11c] transition-colors">
+          Jobs
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
