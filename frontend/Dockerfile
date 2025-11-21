@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.20 AS builder
+FROM node:lts-alpine3.22 AS builder
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ COPY . .
 
 RUN ng build --configuration=production
 
-FROM nginx:1.27-alpine AS production
+FROM nginx:1.29-alpine AS production
 
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder app/dist/frontend /usr/share/nginx/html
