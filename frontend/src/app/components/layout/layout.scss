@@ -69,14 +69,14 @@
   .dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 0.5rem);
     left: 0;
     background: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     padding: 0.5rem 0;
     min-width: 200px;
-    margin-top: 0.5rem;
+    z-index: 1001;
 
     a {
       display: block;
@@ -95,6 +95,17 @@
         color: var(--company-color);
       }
     }
+  }
+
+  // Create an invisible bridge to maintain hover state
+  &::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 0.5rem;
+    background: transparent;
   }
 
   &:hover .dropdown-menu {
