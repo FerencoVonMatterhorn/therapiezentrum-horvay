@@ -1,0 +1,26 @@
+@import '../shared/page-styles.scss';
+
+.legal-content {
+  max-width: 800px;
+  margin: 0 auto;
+
+  h2 {
+    color: #2c3e50;
+    font-size: 1.75rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    color: var(--company-color);
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+}
