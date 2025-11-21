@@ -30,7 +30,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./therapiezentrum-frontend
+          context: ./frontend
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/therapiezentrum-frontend:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/frontend:latest
