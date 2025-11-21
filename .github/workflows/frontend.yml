@@ -33,4 +33,4 @@ jobs:
           context: ./frontend
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/frontend:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/therapiezentrum-horvay-frontend:latest
