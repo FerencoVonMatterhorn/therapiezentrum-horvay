@@ -22,5 +22,3 @@ This directory should contain the following images for the website:
 ## Locations (Standorte)
 - `standort1-placeholder.jpg` - Location 1 image
 - `standort2-placeholder.jpg` - Location 2 image
-
-**Note:** Images in the `public` folder are served from the root URL, so references in HTML should use `images/filename.jpg` (not `assets/images/filename.jpg`).
