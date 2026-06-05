@@ -34,9 +34,7 @@
       line-height: 1.8;
       margin-bottom: 0.5rem;
 
-      strong {
-        color: #2c3e50;
-      }
+      strong { color: #2c3e50; }
     }
   }
 }
@@ -65,8 +63,8 @@
         padding: 0.875rem;
         border: 2px solid #ddd;
         border-radius: 4px;
+        font: inherit;
         font-size: 1rem;
-        font-family: inherit;
         transition: border-color 0.3s;
 
         &:focus {
@@ -75,9 +73,7 @@
         }
       }
 
-      textarea {
-        resize: vertical;
-      }
+      textarea { resize: vertical; }
     }
 
     .btn {
@@ -92,9 +88,71 @@
       cursor: pointer;
       transition: background 0.3s;
 
-      &:hover {
-        background: var(--company-color-dark);
+      &:hover:not(:disabled) { background: var(--company-color-dark); }
+      &:disabled { opacity: 0.6; cursor: not-allowed; }
+    }
+
+    .field-hint {
+      color: #888;
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+
+    .field-error {
+      color: #c0392b;
+      font-size: 0.875rem;
+      margin: 0.4rem 0 0;
+    }
+
+    .privacy-note {
+      background: #fff8e1;
+      border-left: 4px solid #f1c40f;
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      color: #2c3e50;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0 0 1.5rem;
+    }
+
+    .privacy-group .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-weight: 400;
+      color: #2c3e50;
+      line-height: 1.5;
+      cursor: pointer;
+
+      input[type='checkbox'] {
+        width: auto;
+        margin-top: 0.25rem;
+        flex-shrink: 0;
+        accent-color: var(--company-color);
+      }
+
+      a {
+        color: var(--company-color);
+        text-decoration: underline;
       }
     }
+
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+  }
+
+  .alert {
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+
+    &.alert-success { background: #e8f5e9; border: 1px solid #66bb6a; color: #1b5e20; }
+    &.alert-error { background: #fdecea; border: 1px solid #e57373; color: #b71c1c; }
   }
 }

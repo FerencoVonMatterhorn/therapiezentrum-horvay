@@ -31,28 +31,123 @@
         </div>
         <div class="contact-form">
           <h2>Nachricht senden</h2>
-          <form>
+
+          @if (submitted()) {
+            <div class="alert alert-success" role="status">
+              <strong>Vielen Dank!</strong> Ihre Nachricht wurde erfolgreich gesendet. Wir melden uns
+              schnellstmöglich bei Ihnen.
+            </div>
+          }
+
+          @if (errorMessage()) {
+            <div class="alert alert-error" role="alert">
+              {{ errorMessage() }}
+            </div>
+          }
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
             <div class="form-group">
               <label for="name">Name *</label>
-              <input type="text" id="name" name="name" required />
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                autocomplete="name"
+                required
+              />
+              @if (form.controls.name.touched && form.controls.name.invalid) {
+                <p class="field-error">Bitte geben Sie Ihren Namen an.</p>
+              }
             </div>
+
             <div class="form-group">
               <label for="email">E-Mail *</label>
-              <input type="email" id="email" name="email" required />
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                autocomplete="email"
+                required
+              />
+              @if (form.controls.email.touched && form.controls.email.invalid) {
+                <p class="field-error">Bitte geben Sie eine gültige E-Mail-Adresse an.</p>
+              }
             </div>
+
             <div class="form-group">
-              <label for="phone">Telefon</label>
-              <input type="tel" id="phone" name="phone" />
+              <label for="phone">Telefon <span class="field-hint">(optional)</span></label>
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                autocomplete="tel"
+              />
             </div>
+
             <div class="form-group">
               <label for="subject">Betreff *</label>
-              <input type="text" id="subject" name="subject" required />
+              <input
+                type="text"
+                id="subject"
+                formControlName="subject"
+                required
+              />
+              @if (form.controls.subject.touched && form.controls.subject.invalid) {
+                <p class="field-error">Bitte geben Sie einen Betreff an.</p>
+              }
             </div>
+
             <div class="form-group">
               <label for="message">Nachricht *</label>
-              <textarea id="message" name="message" rows="5" required></textarea>
+              <textarea id="message" formControlName="message" rows="5" required></textarea>
+              @if (form.controls.message.touched && form.controls.message.invalid) {
+                <p class="field-error">
+                  Bitte schreiben Sie eine Nachricht (mindestens 10 Zeichen).
+                </p>
+              }
             </div>
-            <button type="submit" class="btn btn-primary">Nachricht senden</button>
+
+            <!-- Honeypot: für Menschen unsichtbar, Bots füllen es trotzdem aus. -->
+            <div class="honeypot" aria-hidden="true">
+              <label for="website">Website (bitte freilassen)</label>
+              <input
+                type="text"
+                id="website"
+                formControlName="_honey"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
+
+            <p class="privacy-note">
+              Bitte senden Sie <strong>keine sensiblen Gesundheitsdaten</strong> über dieses
+              Formular. Für medizinische Anliegen rufen Sie uns bitte an.
+            </p>
+
+            <div class="form-group privacy-group">
+              <label class="checkbox-label">
+                <input type="checkbox" formControlName="consent" required />
+                <span>
+                  Ich habe die
+                  <a routerLink="/datenschutz">Datenschutzerklärung</a>
+                  gelesen und stimme der Verarbeitung meiner Daten zur Beantwortung meiner
+                  Anfrage zu. *
+                </span>
+              </label>
+              @if (form.controls.consent.touched && form.controls.consent.invalid) {
+                <p class="field-error">
+                  Ohne Ihre Einwilligung können wir Ihre Anfrage nicht verarbeiten.
+                </p>
+              }
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="submitting()"
+            >
+              {{ submitting() ? 'Wird gesendet…' : 'Nachricht senden' }}
+            </button>
           </form>
         </div>
       </div>
