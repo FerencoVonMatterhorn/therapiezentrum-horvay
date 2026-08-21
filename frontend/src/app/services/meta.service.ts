@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Injectable, inject } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MetaService {
   private baseUrl = 'https://therapiezentrum-horvay.de';
-  private defaultDescription = 'Professionelle therapeutische Behandlungen für Ihre Gesundheit und Ihr Wohlbefinden.';
+  private defaultTitle = 'Ergotherapie Aschersleben & Staßfurt | Therapiezentrum Horvay';
+  private defaultDescription =
+    'Ergotherapie in Aschersleben und Staßfurt: Feinmotoriktherapie, Neurologie und Kindertherapie im Therapiezentrum Horvay.';
   private defaultImage = `${this.baseUrl}/images/hero-placeholder.png`;
+
+  private document = inject(DOCUMENT);
 
   constructor(
     private title: Title,
@@ -40,15 +45,27 @@ export class MetaService {
       route = route.firstChild;
     }
 
-    const title = route.snapshot.data['title'] || route.snapshot.routeConfig?.['title'] || 'Therapiezentrum Horvay';
+    const title = route.snapshot.routeConfig?.['title']?.toString() ?? this.defaultTitle;
     const description = route.snapshot.data['description'] || this.defaultDescription;
     const image = route.snapshot.data['image'] || this.defaultImage;
-    const url = `${this.baseUrl}${this.router.url}`;
+    const noindex = route.snapshot.data['noindex'] === true;
 
-    this.updateMetaTags(title, description, image, url);
+    this.updateMetaTags(title, description, image, this.canonicalUrl(), noindex);
   }
 
-  private updateMetaTags(title: string, description: string, image: string, url: string): void {
+  /** Canonical URL without query string or fragment, and without a trailing slash. */
+  private canonicalUrl(): string {
+    const path = this.router.url.split(/[?#]/)[0];
+    return path === '/' ? `${this.baseUrl}/` : `${this.baseUrl}${path.replace(/\/$/, '')}`;
+  }
+
+  private updateMetaTags(
+    title: string,
+    description: string,
+    image: string,
+    url: string,
+    noindex: boolean
+  ): void {
     // Update title
     this.title.setTitle(title);
 
@@ -67,6 +84,27 @@ export class MetaService {
     this.meta.updateTag({ property: 'twitter:description', content: description });
     this.meta.updateTag({ property: 'twitter:image', content: image });
     this.meta.updateTag({ property: 'twitter:url', content: url });
+
+    // Keep error pages out of the index, everything else indexable
+    if (noindex) {
+      this.meta.updateTag({ name: 'robots', content: 'noindex, follow' });
+    } else {
+      this.meta.removeTag("name='robots'");
+    }
+
+    this.updateCanonical(url);
+  }
+
+  private updateCanonical(url: string): void {
+    const head = this.document.head;
+    let link = head.querySelector<HTMLLinkElement>("link[rel='canonical']");
+
+    if (!link) {
+      link = this.document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      head.appendChild(link);
+    }
+
+    link.setAttribute('href', url);
   }
 }
-

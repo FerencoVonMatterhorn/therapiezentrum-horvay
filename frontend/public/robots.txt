@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://therapiezentrum-horvay.de/sitemap.xml

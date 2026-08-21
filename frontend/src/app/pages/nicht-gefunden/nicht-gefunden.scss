@@ -1,0 +1,16 @@
+@use '../shared/page-styles';
+
+.not-found-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.not-found-links {
+  margin-top: 1.5rem;
+  padding-left: 1.25rem;
+  line-height: 2;
+
+  a {
+    color: var(--company-color);
+  }
+}
