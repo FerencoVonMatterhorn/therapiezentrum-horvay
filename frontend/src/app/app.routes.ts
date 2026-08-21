@@ -72,7 +72,7 @@ export const routes: Routes = [
     title: 'Kontakt & Termine | Ergotherapie Horvay Aschersleben',
     data: {
       description:
-        'Kontakt zum Therapiezentrum Horvay: Aschersleben 03473 802660, Staßfurt 03925 988411. Sprechzeiten Montag bis Freitag 7:30–18:00 Uhr.'
+        'Kontakt zum Therapiezentrum Horvay: Aschersleben 03473 802660, Staßfurt 03925 988411. Sprechzeiten Montag bis Donnerstag 7:30–18:00 Uhr, Freitag bis 13:00 Uhr.'
     }
   },
   {
