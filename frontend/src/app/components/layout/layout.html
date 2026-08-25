@@ -18,6 +18,7 @@
             </div>
           </div>
           <a routerLink="/standorte" routerLinkActive="active">Standorte</a>
+          <a routerLink="/stellenangebote" routerLinkActive="active">Stellenangebote</a>
           <a routerLink="/kontakt" routerLinkActive="active">Kontakt</a>
         </nav>
         <button class="mobile-menu-toggle" (click)="mobileMenuOpen = !mobileMenuOpen">
@@ -32,6 +33,7 @@
         <a routerLink="/neurologie" routerLinkActive="active" (click)="mobileMenuOpen = false">Neurologie</a>
         <a routerLink="/kindertherapie" routerLinkActive="active" (click)="mobileMenuOpen = false">Kindertherapie</a>
         <a routerLink="/standorte" routerLinkActive="active" (click)="mobileMenuOpen = false">Standorte</a>
+        <a routerLink="/stellenangebote" routerLinkActive="active" (click)="mobileMenuOpen = false">Stellenangebote</a>
         <a routerLink="/kontakt" routerLinkActive="active" (click)="mobileMenuOpen = false">Kontakt</a>
       </nav>
     </div>
@@ -67,6 +69,8 @@
       </div>
       <div class="footer-bottom">
         <div class="footer-links">
+          <a routerLink="/stellenangebote">Stellenangebote</a>
+          <span>|</span>
           <a routerLink="/impressum">Impressum</a>
           <span>|</span>
           <a routerLink="/datenschutz">Datenschutz</a>

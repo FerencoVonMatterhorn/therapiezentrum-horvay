@@ -1,0 +1,98 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="container">
+      <h1>Stellenangebote</h1>
+      <p class="page-subtitle">Werden Sie Teil des Therapiezentrums Horvay</p>
+    </div>
+  </div>
+
+  <section class="content-section">
+    <div class="container">
+      <div class="job-intro">
+        <h2>Offene Stellen</h2>
+        <p>Wir sind ein kollegiales Team an zwei Standorten in Aschersleben und Staßfurt. Bei uns
+          zählt nicht nur die Behandlung, sondern auch, dass die Arbeitszeit zum Leben passt –
+          flexible Zeiten, gefördertes Weiterbilden und ein Team, das sich gegenseitig unterstützt.</p>
+      </div>
+
+      @if (stellenangebote.length > 0) {
+        <div class="job-list">
+          @for (stelle of stellenangebote; track stelle.titel) {
+            <article class="job-card">
+              <h2 class="job-title">{{ stelle.titel }}</h2>
+              <p class="job-subtitle">{{ stelle.untertitel }}</p>
+
+              <dl class="job-facts">
+                <div class="job-fact">
+                  <dt>Standorte</dt>
+                  <dd>{{ stelle.standorte }}</dd>
+                </div>
+                <div class="job-fact">
+                  <dt>Anstellungsart</dt>
+                  <dd>{{ stelle.anstellungsart }}</dd>
+                </div>
+                <div class="job-fact">
+                  <dt>Arbeitszeit</dt>
+                  <dd>{{ stelle.umfang }}</dd>
+                </div>
+                <div class="job-fact">
+                  <dt>Beginn</dt>
+                  <dd>{{ stelle.beginn }}</dd>
+                </div>
+                <div class="job-fact">
+                  <dt>Anzahl offener Stellen</dt>
+                  <dd>{{ stelle.offeneStellen }}</dd>
+                </div>
+              </dl>
+
+              <h3>Ihre Aufgabe</h3>
+              @for (absatz of stelle.beschreibung; track absatz) {
+                <p>{{ absatz }}</p>
+              }
+
+              <h3>Das bringen Sie mit</h3>
+              <ul>
+                @for (anforderung of stelle.anforderungen; track anforderung) {
+                  <li>{{ anforderung }}</li>
+                }
+              </ul>
+
+              <h3>Wir bieten</h3>
+              <ul>
+                @for (leistung of stelle.wirBieten; track leistung) {
+                  <li>{{ leistung }}</li>
+                }
+              </ul>
+
+              <div class="job-apply">
+                <h3>Ihre Bewerbung</h3>
+                <p>Bei Interesse und Eignung bewerben Sie sich bitte schriftlich oder per E-Mail.
+                  Oder rufen Sie uns an, wir vereinbaren ein persönliches Gespräch. Senden Sie uns
+                  gerne Ihren Lebenslauf und Ihre Zeugnisse mit.</p>
+                <p class="apply-contact">
+                  <strong>Sylvia Horvay</strong><br>
+                  Markt 9/10, 06449 Aschersleben<br>
+                  Mobil: <a href="tel:+4917622841611">0176 22841611</a><br>
+                  E-Mail: <a href="mailto:info&#64;ergotherapie-horvay.de">info&#64;ergotherapie-horvay.de</a>
+                </p>
+                <div class="apply-actions">
+                  <a
+                    class="btn btn-primary"
+                    [href]="bewerbungsMailto(stelle)"
+                  >Jetzt per E-Mail bewerben</a>
+                  <a class="btn btn-secondary" routerLink="/kontakt">Zum Kontaktformular</a>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="no-jobs">
+          <p>Aktuell sind keine Stellen ausgeschrieben. Wir freuen uns aber jederzeit über
+            Initiativbewerbungen – melden Sie sich gerne
+            <a routerLink="/kontakt">über unser Kontaktformular</a>.</p>
+        </div>
+      }
+    </div>
+  </section>
+</div>

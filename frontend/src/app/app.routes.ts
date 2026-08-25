@@ -67,6 +67,16 @@ export const routes: Routes = [
     }
   },
   {
+    path: 'stellenangebote',
+    loadComponent: () =>
+      import('./pages/stellenangebote/stellenangebote').then(m => m.Stellenangebote),
+    title: 'Stellenangebote | Therapiezentrum Horvay Aschersleben & Staßfurt',
+    data: {
+      description:
+        'Aktuelle Stellenangebote im Therapiezentrum Horvay: Ergotherapeut/in (m/w/d) in Vollzeit oder Teilzeit für Aschersleben und Staßfurt. Jetzt bewerben.'
+    }
+  },
+  {
     path: 'kontakt',
     loadComponent: () => import('./pages/kontakt/kontakt').then(m => m.Kontakt),
     title: 'Kontakt & Termine | Ergotherapie Horvay Aschersleben',
