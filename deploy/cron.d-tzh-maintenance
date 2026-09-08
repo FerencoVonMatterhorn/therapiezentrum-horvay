@@ -1,0 +1,11 @@
+# Woechentliche Wartung: Systemupdates und Container-Images (inkl. Caddy).
+# Nach /etc/cron.d/tzh-maintenance kopieren. Dateirechte muessen 0644 sein
+# und die Datei darf keinen Punkt im Namen haben, sonst ignoriert cron sie.
+#
+# flock verhindert, dass sich zwei Laeufe ueberschneiden, falls einer haengt.
+
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# min  std  tag  monat  wochentag  benutzer  befehl
+30     4    *    *      7          root      flock -n /var/lock/tzh-maintenance /opt/therapiezentrum-horvay/deploy/maintenance.sh

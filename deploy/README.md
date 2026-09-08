@@ -86,6 +86,47 @@ cd deploy && docker compose up -d
 Änderungen am Website-Inhalt landen dagegen automatisch auf dem Server,
 sobald der Workflow durchgelaufen ist.
 
+## Woechentliche Wartung
+
+Watchtower aktualisiert nur den Frontend-Container. Caddy, Watchtower selbst
+und das Betriebssystem deckt ein Cronjob ab.
+
+`maintenance.sh` macht sonntags um 4:30 Uhr:
+
+1. `apt dist-upgrade` — unattended-upgrades liefert nur Security-Updates,
+   hier kommt der Rest
+2. `docker compose pull` + `up -d` fuer **alle** Dienste, also auch Caddy
+3. verwaiste Images entfernen
+4. Neustart, falls `/var/run/reboot-required` existiert (Kernel-Updates)
+
+Einrichten:
+
+```bash
+sudo install -m 0644 /opt/therapiezentrum-horvay/deploy/cron.d-tzh-maintenance \
+  /etc/cron.d/tzh-maintenance
+```
+
+Einmal von Hand testen, bevor man sich darauf verlaesst:
+
+```bash
+sudo /opt/therapiezentrum-horvay/deploy/maintenance.sh
+```
+
+Nachsehen, was gelaufen ist:
+
+```bash
+journalctl -t tzh-maintenance --since "2 weeks ago"
+```
+
+Der automatische Neustart laesst sich oben im Skript ueber
+`REBOOT_IF_REQUIRED="no"` abschalten. Dann muss man Kernel-Updates selbst
+aktivieren — ohne Neustart laeuft der alte Kernel weiter.
+
+Aenderungen an `docker-compose.yml` oder `Caddyfile` zieht das Skript
+bewusst nicht nach. Dafuer weiterhin von Hand `git pull` und
+`docker compose up -d`, damit eine fehlerhafte Konfiguration nicht nachts
+unbemerkt die Seite abschaltet.
+
 ## Testen vor der DNS-Umstellung
 
 Damit die Seite steht, bevor der A-Record umgezogen wird: lokal in
