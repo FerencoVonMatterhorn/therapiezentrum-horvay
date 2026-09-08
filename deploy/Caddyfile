@@ -1,0 +1,27 @@
+{
+	# Adresse für Let's-Encrypt-Benachrichtigungen (ablaufende Zertifikate).
+	email info@ergotherapie-horvay.de
+}
+
+therapiezentrum-horvay.de {
+	encode zstd gzip
+
+	header {
+		# Erzwingt HTTPS für ein Jahr. Erst aktivieren, wenn das Zertifikat
+		# nachweislich steht — Browser merken sich das und ignorieren
+		# danach http:// für diese Domain.
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		# Die Seite wird nirgends eingebettet.
+		Content-Security-Policy "frame-ancestors 'none'"
+		-Server
+	}
+
+	reverse_proxy frontend:4200
+}
+
+# Kanonisch ist die Domain ohne www (siehe sitemap.xml).
+www.therapiezentrum-horvay.de {
+	redir https://therapiezentrum-horvay.de{uri} permanent
+}

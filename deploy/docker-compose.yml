@@ -1,0 +1,53 @@
+services:
+  frontend:
+    image: ghcr.io/ferencovonmatterhorn/therapiezentrum-horvay-frontend:latest
+    restart: unless-stopped
+    expose:
+      - "4200"
+    networks:
+      - web
+    labels:
+      # Nur dieser Container wird von Watchtower aktualisiert.
+      com.centurylinklabs.watchtower.enable: "true"
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - web
+    depends_on:
+      - frontend
+
+  watchtower:
+    image: containrrr/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      # Aktualisiert ausschließlich Container mit dem Label oben — Caddy
+      # bleibt unangetastet, damit nicht bei jedem Deploy die TLS-Verbindungen
+      # abreissen.
+      WATCHTOWER_LABEL_ENABLE: "true"
+      # Altes Image nach dem Update entfernen, sonst laeuft die Platte voll.
+      WATCHTOWER_CLEANUP: "true"
+      # Sekunden zwischen zwei Registry-Abfragen.
+      WATCHTOWER_POLL_INTERVAL: "300"
+    # Bewusst ohne Netzwerk: Watchtower spricht nur mit dem Docker-Socket
+    # und der Registry, nicht mit den anderen Containern.
+
+volumes:
+  # Haelt Let's-Encrypt-Zertifikate und Account-Key. Geht das Volume verloren,
+  # muessen Zertifikate neu ausgestellt werden — das ist rate limited.
+  caddy_data:
+  caddy_config:
+
+networks:
+  web:
